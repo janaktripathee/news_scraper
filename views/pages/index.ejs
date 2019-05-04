@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Yorker Fiction Scraper</title>
+	<title>Fiction Scraper</title>
 </head>
 <body>
-	<h1>Fiction Scraper</h1>
+	<h1>Scraper</h1>
 	<% if(allstory.length > 0){ %>
 		<div>
 			<% for(var i = 0; i<allstory.length; i++){ %>
 				<div>
 					<p>Title: <%= allstory[i].title %></p>
-					<p>Summary: <%= allstory[i].summary %></p>
+					<p>Description: <%= allstory[i].desc %></p>
 					<p><a href="<%= allstory[i].link %>">Story Link</a></p><br>
 				</div>
 		<%	} %>
 		</div>
 	<% } %>
 	<form method="POST" action="/scrape">
-		<button type="submit">Click here to load new short stories!</button>
+		<button type="submit">Load More</button>
 	</form>
 </body>
 </html>
