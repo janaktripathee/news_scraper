@@ -21,33 +21,41 @@ app.get('/', function(req, res){
 	}); 
 })
 
-app.get("/all", function(req, res){
+app.get("/home", function(req, res){
 	db.allScrapedData.find({}, function(error, found){
 		if(error) throw error; 
-		else res.render('views/index', {
+		else res.render('pages/index', {
 			allstory: found
 		})
 	})
 })
+
 app.post("/scrape", function(req, res){
   axios.get("http://www.echojs.com/").then(function(response){
   	console.log(response,"response");
 		var $ = cheerio.load(response.data); 
 		$(".River__hed___re6RP").each(function(i, el){
 			var title = $(el).text();
-			var desc = $(element).parent().siblings(".River__riverItemBody___347sz").children("h5").text();
-			var link = 'https:www.newyorker.com' + $(element).parent().attr("href");
-				db.scrapedData.insert({
+			var desc = $(el).parent().siblings(".River__riverItemBody___347sz").children("h5").text();
+			console.log(desc,"description");
+			var link = 'https:www.newyorker.com' + $(el).parent().attr("href");
+			
+			if (title && desc && link){
+				db.allScrapedData.insert({
 					title: title, 
-					Description: desc,
+					desc: desc,
 					link: link
 				},
 				function(err, inserted){
 					if(err) throw err; 
 					else console.log(inserted); 
 				});
+
+			}
+				
 		});
 	});
+  res.redirect('/home');
 })
 
 
